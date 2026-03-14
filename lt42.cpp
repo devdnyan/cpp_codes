@@ -41,3 +41,37 @@ public:
 
     }
 };
+
+//proposed solution 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* temp = head;
+        for(int i=0 ; i<k ; i++){
+            if(!temp) return head;
+            temp = temp->next;    
+        }
+
+        ListNode* prev=nullptr, *curr=head, *next=nullptr;
+        for(int i=0 ; i<k ; i++){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        //here the problem of first node is solved 
+        head->next = reverseKGroup(temp, k);
+        //also the last node problwm too
+        return prev;
+    }
+};
